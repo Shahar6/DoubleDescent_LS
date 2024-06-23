@@ -53,3 +53,10 @@ for i in range(test_size):
     test_matrix[i, :] = vec
     y = (vec[0].T @ beta) + generate_epsilon()
     test_out.append(y)
+
+# create U
+p = d
+U = np.zeros((p, d))
+for i in range(p):
+    column = DCT[:, i]
+    U[: i] = column
