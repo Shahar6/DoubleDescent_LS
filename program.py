@@ -31,14 +31,25 @@ def generate_scalar_normal(mean=0, variance=0.25):
 
 
 data_size = 32
-input_matrix = np.zeros((data_size, d))
+train_matrix = np.zeros((data_size, d))
 
 sample_out = []
 
 for i in range(data_size):
     vec = generate_random_x_cholesky()
-    input_matrix[i, :] = vec
+    train_matrix[i, :] = vec
     y = vec[0].T @ beta + generate_scalar_normal()
     sample_out.append(y)
 
-print("rank of X is " + str(np.linalg.matrix_rank(input_matrix)))
+print("rank of X is " + str(np.linalg.matrix_rank(train_matrix)))
+
+test_size = 1000
+test_matrix = np.zeros((test_size, d))
+
+test_out = []
+
+for i in range(test_size):
+    vec = generate_random_x_cholesky()
+    test_matrix[i, :] = vec
+    y = vec[0].T @ beta + generate_scalar_normal()
+    test_out.append(y)
