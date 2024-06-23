@@ -16,7 +16,7 @@ beta_tide = np.array([0.2178] * 20 + [0.0218] * 108)
 beta = DCT @ beta_tide
 
 
-def generate_random_x_cholesky(Sigma=Sigma, num_samples=1):
+def generate_x(Sigma=Sigma, num_samples=1):
     L = np.linalg.cholesky(Sigma)
     dim = Sigma.shape[0]
     z = np.random.normal(size=(num_samples, dim))
@@ -24,21 +24,32 @@ def generate_random_x_cholesky(Sigma=Sigma, num_samples=1):
     return x
 
 
-def generate_scalar_normal(mean=0, variance=0.25):
+def generate_epsilon(mean=0, variance=0.25):
     std_dev = np.sqrt(variance)
     scalar = np.random.normal(loc=mean, scale=std_dev)
     return scalar
 
 
 data_size = 32
-input_matrix = np.zeros((data_size, d))
+train_matrix = np.zeros((data_size, d))
 
 sample_out = []
 
 for i in range(data_size):
-    vec = generate_random_x_cholesky()
-    input_matrix[i, :] = vec
-    y = vec[0].T @ beta + generate_scalar_normal()
+    vec = generate_x()
+    train_matrix[i, :] = vec
+    y = vec[0].T @ beta + generate_epsilon()
     sample_out.append(y)
 
-print("rank of X is " + str(np.linalg.matrix_rank(input_matrix)))
+print("rank of X is " + str(np.linalg.matrix_rank(train_matrix)))
+
+test_size = 1000
+test_matrix = np.zeros((test_size, d))
+
+test_out = []
+
+for i in range(test_size):
+    vec = generate_x()
+    test_matrix[i, :] = vec
+    y = (vec[0].T @ beta) + generate_epsilon()
+    test_out.append(y)
