@@ -72,7 +72,7 @@ for p in range(1, d + 1):
     errors.append(test_err)
 
 plt.plot(params, errors, color='b')
-
+plt.ylim(0, 2.5)
 plt.title('Errors dependent on Parameters in Least Squares')
 plt.xlabel('Parameters')
 plt.ylabel('Error')
@@ -116,8 +116,8 @@ for p in range(1, d + 1):
     bias[p - 1] = Fx_avg / test_size
 
 plt.plot(params, avg_errors, color='b', label='Average Test Error')
-plt.plot(params, bias, color='r', ls='- -', label='Bias Squared')
-plt.plot(params, variance, color='p', ls='- -', label='Variance')
+plt.plot(params, bias, color='r', ls='--', dashes=(5, 5), label='Bias Squared')
+plt.plot(params, variance, color='g', ls='--', dashes=(5, 5), label='Variance')
 plt.title('Error, bias and variance dependent on Parameters in Least Squares')
 plt.xlabel('Parameters')
 plt.ylim(0, 2.5)
