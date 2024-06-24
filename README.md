@@ -55,6 +55,7 @@ that is the double descent and what you call - perfect fitting. :)
 It is worth stressing again that 32 was the size of the training data, that is why as we approach 32  
 the training error increases dramatically. (overfit)
 
-Here is the graph of the same run but with 1000 training sets to average off:  
+Here is the graph of the same run but with 1000 training sets to average off (slightly more smooth):  
+
 ![image](https://github.com/Shahar6/DoubleDescent_LS/assets/79195545/713aa398-1657-4d35-ab5f-22abac007148)
 
