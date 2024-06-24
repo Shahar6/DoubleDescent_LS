@@ -31,7 +31,7 @@ the bias and variance of the models.
 
 # Calculating the predictors
 Since we use between 1 and 128 parameters for the predictor, and train it on 32 samples,  
-there can be either 0-1 solutions (when p <= 32), or an 0/infinite amount (when p > 32) this depends on whether or not $(𝚽^𝑇𝚽)$ has an inverse  
+there can be either 0-1 solutions (when p <= 32), or 0/infinite amount (when p > 32) this depends on whether or not $(𝚽^𝑇𝚽)$ has an inverse  
 The way to find the optimal predictor is:  
 $a = (𝚽^𝑇𝚽)^{-1} * 𝚽^𝑇 * y$ if there is an inverse we use it  
 $a = (𝚽^𝑇𝚽)^+ *𝚽^𝑇 *y$ if there isn't an inverse we can use the pseudo inverse  
