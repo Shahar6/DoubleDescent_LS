@@ -12,8 +12,8 @@ Here is an example with points in 1 dimension (second dimension is the label) an
 
 # This program
 In this case, we generate a training set and a test set from a certain distribution (more detail below)
-and we use the test set to learn a classifier with a changing amount of parameters {1,...,128}
-We then plot the result and observe the double descent phenomenon!
+and we use the train set to learn a classifier with a changing amount of parameters {1,...,128}
+We then plot the errors of the classifier on the test set for all the parameters and observe the double descent phenomenon!
 
 # Generating the data
 To set the stage some parameters are decided arbitrarily:  
