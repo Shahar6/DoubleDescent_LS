@@ -53,10 +53,9 @@ for i in range(test_size):
     test_matrix[i, :] = vec
     y = (vec[0].T @ beta) + generate_epsilon()
     test_out[i, :] = y
-
 # create U
 errors = []
-params = []
+params = [i for i in range(1, d + 1)]
 for p in range(1, d + 1):
     U = np.zeros((d, p))
     for i in range(p):
@@ -69,12 +68,56 @@ for p in range(1, d + 1):
     else:
         alpha = np.linalg.pinv(tetha.T @ tetha) @ tetha.T @ sample_out
     test_err = np.linalg.norm((alpha.T @ U.T @ test_matrix.T) - test_out) / test_size
-    params.append(p)
     errors.append(test_err)
 
-plt.plot(params, errors, marker='o', linestyle='-', color='b')
+plt.plot(params, errors, color='b')
 
-plt.title('Errors and Parameters Least Squares')
+plt.title('Errors dependent on Parameters in Least Squares')
 plt.xlabel('Parameters')
 plt.ylabel('Error')
+plt.show()
+
+K = 1  # times to repeat the experiment
+# create vector to store the errors
+avg_errors = np.zeros(d)
+bias = np.zeros(d)
+variance = np.zeros(d)
+Fs = np.zeros((K, test_size))
+
+for p in range(1, d + 1):
+    Fx_avg = np.zeros((1, test_size))
+    U = np.zeros((d, p))
+    for i in range(p):
+        column = DCT[:, i]
+        U[:, i] = column
+    for j in range(K):
+        # generate training set
+        train_matrix = np.zeros((data_size, d))
+        sample_out = np.zeros((data_size, 1))
+        for i in range(data_size):
+            vec = generate_x()
+            train_matrix[i, :] = vec
+            y = vec[0].T @ beta + generate_epsilon()
+            sample_out[i, :] = y
+        tetha = train_matrix @ U
+        hasInv = np.linalg.det(tetha.T @ tetha) != 0
+        if hasInv:
+            alpha = np.linalg.inv(tetha.T @ tetha) @ tetha.T @ sample_out
+        else:
+            alpha = np.linalg.pinv(tetha.T @ tetha) @ tetha.T @ sample_out
+        curr_f = (alpha.T @ U.T @ test_matrix.T)
+        test_err = np.linalg.norm(curr_f - test_out) / test_size
+        avg_errors[p - 1] += (test_err / K)
+        Fx_avg += (curr_f / K)
+        Fs[j, :] = curr_f
+    variance[p - 1] = np.sum(np.linalg.norm(Fs - Fx_avg, axis=1)) / (K * test_size)
+    Fx_avg = np.linalg.norm(Fx_avg - (test_matrix @ beta))
+    bias[p - 1] = Fx_avg / test_size
+
+plt.plot(params, avg_errors, color='b', label='Average Error')
+plt.plot(params, bias, color='r', label='Bias')
+plt.plot(params, variance, color='g', label='Variance')
+plt.title('Average Error, bias and variance dependent on Parameters in Least Squares')
+plt.xlabel('Parameters')
+plt.legend()
 plt.show()
