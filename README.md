@@ -1,11 +1,12 @@
 # LS Double Descent
-This code showcases the double descent phenomenon on the Least Squares problem.
-With each step I increased the amount of parameters the model learns from the training data
+This code showcases the double descent phenomenon on the Least Squares problem.  
+With each step I increased the amount of parameters the model learns from the training data  
 and plotted the results of the learned model on the test data.
 
 # LS
 Least squares is a classical linear regression method, that minimizes the sum of squared errors
-between the points to study a trend line:
+between the points to study a trend line.  
+Here is an example with points in 1 dimension (second dimension is the label) and their distance from the trend line:  
 
 ![image](https://github.com/Shahar6/DoubleDescent_LS/assets/79195545/ccf01285-c56d-49ab-ad1e-584dd1257fb4)
 
@@ -30,24 +31,27 @@ the bias and variance of the models.
 
 # Calculating the predictors
 Since we use between 1 and 128 parameters for the predictor, and train it on 32 samples,  
-there can be either 0-1 solutions (when p <= 32), or an infinite amount (when p > 32)  
+there can be either 0-1 solutions (when p <= 32), or an 0/infinite amount (when p > 32) this depends on whether or not $(𝚽^𝑇𝚽)$ has an inverse  
 The way to find the optimal predictor is:  
-$a = (𝚽^𝑇𝚽)^{-1} * 𝚽^𝑇 * y$  
-$a = (𝚽^𝑇𝚽)^+ *𝚽^𝑇 *y$  
-where $𝚽=XU_p$  and $U_p$ is a dxp orthonormal matrix that converts the input from nxd to nxp
+$a = (𝚽^𝑇𝚽)^{-1} * 𝚽^𝑇 * y$ if there is an inverse we use it  
+$a = (𝚽^𝑇𝚽)^+ *𝚽^𝑇 *y$ if there isn't an inverse we can use the pseudo inverse  
+where $𝚽=XU_p$ and $U_p$ is a dxp orthonormal matrix that converts the input from nxd to nxp  
 
 # Results
-Plotting the first part (one training dataset) we can see this error:  
-![image](https://github.com/Shahar6/DoubleDescent_LS/assets/79195545/99766966-6b09-498f-a749-7f48e7e59645)  
+Plotting the first part (one training dataset) we can see this error:
+
+![image](https://github.com/Shahar6/DoubleDescent_LS/assets/79195545/679824f3-8a38-47e9-8613-2cc74d3b0281)
+  
 Note: because the data is from a distribution, the result of one dataset isn't reputed enough,  
 each run generates different values (all follow a certain trend tho)  
 
-And now plotting the second part (average of 500 training data sets and also variance and bias)  
-![image](https://github.com/Shahar6/DoubleDescent_LS/assets/79195545/67ef089b-a0de-400b-aa20-321e981bb635)  
+And now plotting the second part (average of 500 training data sets and also variance and bias):
+
+![image](https://github.com/Shahar6/DoubleDescent_LS/assets/79195545/d1710b6d-6873-48ba-88d1-9ded7b82d348)
 
 In both graphs we see the double descent. In the second graph we can see that the Bias went up sharply  
-from around 30 parameters, and then went down sharply at around 60, from there on there is a small decrease  
-that is the double descent, perfect fitting. :)  
+from around 30 parameters, and then went down sharply at around 60, from there on, there is a small decrease  
+that is the double descent and what you call - perfect fitting. :)  
 It is worth stressing again that 32 was the size of the training data, that is why as we approach 32  
 the training error increases dramatically. (overfit)
 
