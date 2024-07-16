@@ -59,3 +59,8 @@ Here is the graph of the same run but with 1000 training sets to average off (sl
 
 ![image](https://github.com/Shahar6/DoubleDescent_LS/assets/79195545/713aa398-1657-4d35-ab5f-22abac007148)
 
+# Ridge regression
+I added another branch with ridge regression, regularization on the l2 norm.  
+Below is the graph plotted there:  
+
+![image](https://github.com/user-attachments/assets/be647baf-9a8c-49a6-992a-f66d19282d9e)
